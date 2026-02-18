@@ -1,0 +1,8 @@
+# Ignore environment files
+.env
+Backend/.env
+Frontend/.env
+
+# Ignore build folders
+Frontend/dist
+node_modules
