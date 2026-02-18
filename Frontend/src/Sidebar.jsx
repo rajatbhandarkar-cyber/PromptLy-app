@@ -6,7 +6,7 @@ import {v1 as uuidv1} from "uuid";
 function Sidebar() {
     const {allThreads,setAllThreads,currThreadId,setNewChat,setPrompt, setReply,setcurrThreadId,setPrevChats} = useContext(MyContext);
 
-    const getAllThrads = async() =>{
+    const getAllThreads = async() =>{
       try{
         const response = await fetch("http://localhost:8080/api/thread");
         const res = await response.json();
@@ -19,7 +19,7 @@ function Sidebar() {
     };
 
     useEffect(() => {
-       getAllThrads();
+       getAllThreads();
     },[currThreadId])
 
     const createNewChat = () => {

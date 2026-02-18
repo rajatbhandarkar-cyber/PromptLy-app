@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { get } from "mongoose";
+import fetch from "node-fetch";
 
 const getOpenAiAPIResponse = async(message) => {
       const options = {
@@ -12,9 +13,9 @@ const getOpenAiAPIResponse = async(message) => {
             model:"gpt-4o-mini",
             messages:[{
                role:"user",
-               content:message
-            }]
-        })
+               content:message,
+            }],
+        }),
     };
 
     try{

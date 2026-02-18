@@ -3,35 +3,57 @@ import "dotenv/config";
 import cors from "cors";
 import mongoose from "mongoose";
 import chatRoutes from "./routes/chat.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Fix __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
-// const PORT = 8080;
 const PORT = process.env.PORT || 8080;
 
-
+// ✅ CORS configuration
 app.use(cors({
   origin: [
-    "http://localhost:5173",          // Vite dev (if you use Vite)
-    "http://localhost:3000",          // CRA dev (if you use CRA)
-    "https://your-frontend.onrender.com" // after you deploy frontend
+    "http://localhost:5173",          // Vite dev
+    "http://localhost:3000",          // CRA dev
+    "https://promptly.vercel.app"     // production frontend on Vercel
   ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   credentials: true
 }));
 
+// ✅ Middleware
 app.use(express.json());
-app.use("/api",chatRoutes);
 
-app.listen(PORT,() => {
-    console.log(`server running on ${PORT}`);
-    connectDB();
+// ✅ API routes
+app.use("/api", chatRoutes);
+
+// ✅ Serve frontend build (adjust path based on your folder structure)
+app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Frontend/dist/index.html"));
 });
 
-const connectDB = async() => {
-    try{
-       await mongoose.connect(process.env.MONGODB_URI);
-       console.log("connected with Database");
-    }catch(err){
-       console.log("fialed to connect with the DB",err);
-    }
-}
+// ✅ Database connection + server start
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected with Database");
+
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  } catch (err) {
+    console.error("Failed to connect with the DB", err);
+  }
+};
+
+connectDB();
+
+// ✅ Optional: Error handler middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: "Something went wrong!" });
+});

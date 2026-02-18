@@ -1,6 +1,5 @@
 import express from "express";
 import Thread from "../models/Thread.js";
-import { ConflictError } from "openai/error.js";
 import getOpenAiAPIResponse from "../utils/openai.js";
 
 const router = express.Router();
@@ -72,7 +71,7 @@ router.post("/chat",async(req,res) => {
     const{threadId,message} = req.body;
 
     if(!threadId || !message) {
-        res.status(400).json({error:"missing required fields"});
+        return res.status(400).json({error:"missing required fields"});
     }
 
     try{
