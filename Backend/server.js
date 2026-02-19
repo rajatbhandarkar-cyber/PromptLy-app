@@ -11,7 +11,9 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = process.env.PORT || 8080;
+
+// ✅ Use environment port or fallback
+const PORT = process.env.PORT || 5000; // changed default from 8080 to 5000
 
 // ✅ CORS configuration
 app.use(cors({
@@ -19,7 +21,7 @@ app.use(cors({
     "http://localhost:5173",          // Vite dev
     "http://localhost:3000",          // CRA dev
     "https://promptly.vercel.app",    // production frontend on Vercel
-    "https://your-frontend.onrender.com" // optional: if you deploy frontend on Render
+    "https://your-frontend.onrender.com" // optional: if frontend deployed on Render
   ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   credentials: true
@@ -43,17 +45,19 @@ const connectDB = async () => {
     await mongoose.connect(process.env.MONGODB_URI);
     console.log("Connected with Database");
 
+    // Start server only after DB connection
     app.listen(PORT, () => {
       console.log(`Server running on port ${PORT}`);
     });
   } catch (err) {
     console.error("Failed to connect with the DB", err);
+    process.exit(1); // exit if DB connection fails
   }
 };
 
 connectDB();
 
-// ✅ Optional: Error handler middleware
+// ✅ Error handler middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).json({ error: "Something went wrong!" });
