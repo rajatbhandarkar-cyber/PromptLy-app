@@ -18,32 +18,18 @@ app.use(cors({
   origin: [
     "http://localhost:5173",          // Vite dev
     "http://localhost:3000",          // CRA dev
-    "https://promptly.vercel.app"     // production frontend on Vercel
+    "https://promptly.vercel.app",    // production frontend on Vercel
+    "https://your-frontend.onrender.com" // optional: if you deploy frontend on Render
   ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   credentials: true
 }));
 
-<<<<<<< HEAD
 // ✅ Middleware
 app.use(express.json());
 
 // ✅ API routes
 app.use("/api", chatRoutes);
-=======
-app.use(cors({
-  origin: [
-    "http://localhost:5173",          // Vite dev (if you use Vite)
-    "http://localhost:3000",          // CRA dev (if you use CRA)
-    "https://your-frontend.onrender.com" // after you deploy frontend
-  ],
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
-  credentials: true
-}));
-
-app.use(express.json());
-app.use("/api",chatRoutes);
->>>>>>> 4b558c35d845dafb930a2ee9a1b2dd5d15ce88ee
 
 // ✅ Serve frontend build (adjust path based on your folder structure)
 app.use(express.static(path.join(__dirname, "../Frontend/dist")));
