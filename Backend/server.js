@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // ✅ Use environment port or fallback
-const PORT = process.env.PORT || 5000; // changed default from 8080 to 5000
+const PORT = process.env.PORT || 5001; // changed default from 8080 to 5000
 
 // ✅ CORS configuration
 app.use(cors({

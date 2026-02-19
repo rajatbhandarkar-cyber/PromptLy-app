@@ -9,12 +9,12 @@
     "nodemon": "^3.1.10",
     "openai": "^5.10.1"
   },
-  "scripts": {
-    "render-build": "npm run build-client && npm run install-server",
-    "build-client": "cd ../frontend && npm install && npm run build && rm -rf ../backend/public && mkdir -p ../backend/public && cp -r build/* ../backend/public/",
-    "install-server": "npm install",
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+  "scripts": { 
+    "render-build": "npm run build-client && npm run install-server", 
+    "build-client": "cd ../Frontend && npm install && npm run build && rm -rf ../Backend/public && mkdir -p ../Backend/public && cp -r dist/* ../Backend/public/", 
+    "install-server": "npm install", 
+    "start": "node server.js", 
+    "dev": "nodemon server.js" 
   },
   "engines": {
     "node": "20.x"
