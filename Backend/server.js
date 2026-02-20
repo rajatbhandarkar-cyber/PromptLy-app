@@ -13,7 +13,7 @@ const __dirname = path.dirname(__filename);
 const app = express();
 
 // ✅ Use environment port or fallback
-const PORT = process.env.PORT || 5001; // changed default from 8080 to 5000
+const PORT = process.env.PORT || 5001;
 
 // ✅ CORS configuration
 app.use(cors({
@@ -21,7 +21,7 @@ app.use(cors({
     "http://localhost:5173",          // Vite dev
     "http://localhost:3000",          // CRA dev
     "https://promptly.vercel.app",    // production frontend on Vercel
-    "https://your-frontend.onrender.com" // optional: if frontend deployed on Render
+    "https://promptly-app.onrender.com" // production frontend on Render
   ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
   credentials: true
@@ -33,10 +33,10 @@ app.use(express.json());
 // ✅ API routes
 app.use("/api", chatRoutes);
 
-// ✅ Serve frontend build (adjust path based on your folder structure)
-app.use(express.static(path.join(__dirname, "../Frontend/dist")));
+// ✅ Serve frontend build using project root
+app.use(express.static(path.join(process.cwd(), "Frontend/dist")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../Frontend/dist/index.html"));
+  res.sendFile(path.join(process.cwd(), "Frontend/dist/index.html"));
 });
 
 // ✅ Database connection + server start
