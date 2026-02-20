@@ -34,10 +34,11 @@ app.use(express.json());
 app.use("/api", chatRoutes);
 
 // ✅ Serve frontend build using project root
-app.use(express.static(path.join(process.cwd(), "Frontend/dist")));
+app.use(express.static(path.join(__dirname, "public")));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "Frontend/dist/index.html"));
+  res.sendFile(path.join(__dirname, "public/index.html"));
 });
+
 
 // ✅ Database connection + server start
 const connectDB = async () => {
