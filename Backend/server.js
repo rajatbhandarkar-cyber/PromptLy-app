@@ -21,6 +21,7 @@ app.use(cors({
     "http://localhost:5173",          // Vite dev
     "http://localhost:3000",          // CRA dev
     "https://promptly.vercel.app",    // production frontend on Vercel
+    "https://prompt-ly-app.vercel.app",
     "https://promptly-app.onrender.com" // production frontend on Render
   ],
   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
