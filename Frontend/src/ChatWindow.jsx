@@ -43,7 +43,7 @@ function ChatWindow() {
                 role:"user",
                 content:prompt
             },{
-                role:"assistent",
+                role:"assistant",
                 content:reply
             }]
         ))
